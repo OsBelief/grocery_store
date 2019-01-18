@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'tab/BookTabDart.dart';
 import 'tab/MovieTabDart.dart';
 import 'tab/MusicTabDart.dart';
@@ -17,6 +18,8 @@ class _HomePageState extends State<HomePage>
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIOverlays(
+        [SystemUiOverlay.top, SystemUiOverlay.bottom]);
     tabController = TabController(length: 3, vsync: this);
   }
 
@@ -28,9 +31,7 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
+    return Scaffold(
         body: TabBarView(
           controller: tabController,
           children: <Widget>[
@@ -60,8 +61,6 @@ class _HomePageState extends State<HomePage>
               )
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

@@ -10,17 +10,14 @@ class BookTabPage extends StatefulWidget {
 class _BookTabPageState extends State<BookTabPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("图书"),
-          backgroundColor: Colors.orangeAccent,
-          centerTitle: true,
-        ),
-        body: Center(
-          child: Text("这里是图书"),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("图书"),
+        backgroundColor: Colors.orangeAccent,
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Text("这里是图书"),
       ),
     );
   }

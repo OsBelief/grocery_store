@@ -10,17 +10,14 @@ class MovieTabPage extends StatefulWidget {
 class _MovieTabPageState extends State<MovieTabPage> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("电影"),
-          backgroundColor: Colors.red,
-          centerTitle: true,
-        ),
-        body: Center(
-          child: Text("这里是电影"),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("电影"),
+        backgroundColor: Colors.red,
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Text("这里是电影"),
       ),
     );
   }
