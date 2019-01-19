@@ -31,6 +31,10 @@ class _FlashPageState extends State<FlashPage> {
           timer.remaining.inSeconds.toString() +
           ", elapsed=" +
           timer.elapsed.inSeconds.toString());
+
+      /// lambda表达式, Java/JavaScript/Dart都支持, 表示将匿名函数(Java中是函数式接口)赋值给变量的简写形式, 语法上略有不同
+      /// (参数列表)=>{函数声明}
+      /// (参数列表)=>单一表达式
       setState(
           () => duration = (DEFAULT_FLASH_DURATION - timer.elapsed.inSeconds));
     }, onDone: () {
