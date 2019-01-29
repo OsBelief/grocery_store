@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:grocery_store/api/ApiService.dart';
+import 'package:grocery_store/tab/model/Book.dart';
+import 'dart:math';
+
+import 'package:grocery_store/tab/view/BookListItem.dart';
 
 class BookTabPage extends StatefulWidget {
   @override
@@ -9,6 +13,15 @@ class BookTabPage extends StatefulWidget {
 }
 
 class _BookTabPageState extends State<BookTabPage> {
+  List<String> testQuery = [
+    "love",
+    "boy",
+    "girl",
+    "world",
+    "earth",
+    "food",
+    "beauty"
+  ]; // 测试数据
   List<dynamic> result = List<dynamic>();
 
   @override
@@ -32,44 +45,30 @@ class _BookTabPageState extends State<BookTabPage> {
   }
 
   /// Dart和JavaScript中的async函数语义一致, async表示函数里有异步操作, await表示紧跟在后面的表达式需要等待结果
-  void requestBooks() async {
-    List<dynamic> _result = await ApiService.searchBooks(
-        "https://api.douban.com/v2/book/search?q=love",
+  /// Dart的Future和JavaScript的Promise类似
+  Future<List> requestBooks() async {
+    var rng = new Random();
+    var _result = await ApiService.searchBooks(
+        "https://api.douban.com/v2/book/search?q=" + testQuery[rng.nextInt(7)],
         params: null);
     setState(() {
-      result = _result;
+      result = _result['books'];
     });
-  }
-
-  createListItemVew(var book) {
-    var row = Container(
-      margin: EdgeInsets.all(4.0),
-      child: Row(
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4.0),
-            child: Image.network(
-              book['image'],
-              width: 100.0,
-              height: 150.0,
-              fit: BoxFit.fill,
-            ),
-          ),
-        ],
-      ),
-    );
-    return Card(
-      child: row,
-    );
+    return _result['books'];
   }
 
   inflateBody() {
     if (result.isNotEmpty) {
-      return ListView.builder(
-          itemCount: result.length,
-          itemBuilder: (BuildContext context, int position) {
-            return createListItemVew(result[position]);
-          });
+      return RefreshIndicator(
+        child: ListView.builder(
+            itemCount: result.length,
+            itemBuilder: (BuildContext context, int position) {
+              var book = result[position];
+              return BookListItem(
+                  book: new Book(book["title"], book["author"], book["image"]));
+            }),
+        onRefresh: requestBooks,
+      );
     } else {
       return CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(Colors.blue));
