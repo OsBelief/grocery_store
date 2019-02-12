@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:quiver/async.dart';
 
 import 'HomePage.dart';
+import 'test/FutureTest.dart';
+import 'test/AsyncMethodTest.dart';
 
 class FlashPage extends StatefulWidget {
   @override
@@ -41,6 +43,11 @@ class _FlashPageState extends State<FlashPage> {
       debugPrint("CountdownTimer---onDone");
       goToHome();
     });
+
+    print("-----");
+    FutureTest.test();
+    print("-----");
+    AsyncMethodTest.test();
   }
 
   @override
