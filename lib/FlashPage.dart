@@ -6,6 +6,7 @@ import 'HomePage.dart';
 import 'test/FutureTest.dart';
 import 'test/AsyncMethodTest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'test/LittleDart.dart';
 
 class FlashPage extends StatefulWidget {
   @override
@@ -30,10 +31,8 @@ class _FlashPageState extends State<FlashPage> {
           new Duration(seconds: delayDuration), new Duration(seconds: 1));
       countdownTimer.listen((timer) {
         if (!mounted) return;
-        debugPrint("CountdownTimer---remaining=" +
-            timer.remaining.inSeconds.toString() +
-            ", elapsed=" +
-            timer.elapsed.inSeconds.toString());
+        debugPrint(
+            "CountdownTimer---remaining=${timer.remaining.inSeconds}, elapsed=${timer.elapsed.inSeconds}");
 
         /// lambda表达式, Java/JavaScript/Dart都支持, 表示将匿名函数(Java中是函数式接口)赋值给变量的简写形式, 语法上略有不同
         /// (参数列表)=>{函数声明}
@@ -49,6 +48,8 @@ class _FlashPageState extends State<FlashPage> {
     FutureTest.test();
     print("-----");
     AsyncMethodTest.test();
+
+    LittleDart.main();
   }
 
   @override
@@ -110,10 +111,12 @@ class _FlashPageState extends State<FlashPage> {
   /// SharedPreferences的使用
   Future<int> getDelayDuration() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    int duration = prefs.getInt("flash_delay");
+    int duration = prefs.getInt("flash_delay"); /// SharedPreferences的文件名是FlutterSharedPreferences.xml, key是flutter.flash_delay
 
     print("Flash Delay Duration $duration");
-    duration = duration ?? 5;   /// 等价于duration != null? duration : 5;
+    duration = duration ?? 5;
+
+    /// 等价于duration != null? duration : 5;
 
     duration = (duration % 2 == 0) ? 5 : 4;
     await prefs.setInt("flash_delay", duration);
