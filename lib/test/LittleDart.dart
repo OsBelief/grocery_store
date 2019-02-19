@@ -8,5 +8,7 @@ class LittleDart {
     } catch (e) {
       print(e.toString());
     }
+    print("在Dart中一切都是对象 ${5 is Object}");
+    print("在Dart中一切都是对象 ${null is Object}");
   }
 }

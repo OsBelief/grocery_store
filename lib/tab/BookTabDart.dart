@@ -65,7 +65,9 @@ class _BookTabPageState extends State<BookTabPage> {
             itemBuilder: (BuildContext context, int position) {
               var book = result[position];
               return BookListItem(
-                  book: new Book(book["title"], book["author"], book["image"]));
+                book: new Book(
+                    book["id"], book["title"], book["author"], book["image"]),
+              );
             }),
         onRefresh: requestBooks,
       );
