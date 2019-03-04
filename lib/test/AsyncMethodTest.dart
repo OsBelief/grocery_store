@@ -1,3 +1,5 @@
+import 'dart:async';
+
 /// 学习async/await
 class AsyncMethodTest {
   static test() async {

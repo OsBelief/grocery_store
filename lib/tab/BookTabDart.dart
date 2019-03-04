@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:grocery_store/api/ApiService.dart';
 import 'package:grocery_store/tab/model/Book.dart';
@@ -22,7 +25,7 @@ class _BookTabPageState extends State<BookTabPage> {
     "food",
     "beauty"
   ]; // 测试数据
-  List<dynamic> result = List<dynamic>();
+  List<Book> result = List<Book>();
 
   @override
   void initState() {
@@ -46,15 +49,15 @@ class _BookTabPageState extends State<BookTabPage> {
 
   /// Dart和JavaScript中的async函数语义一致, async表示函数里有异步操作, await表示紧跟在后面的表达式需要等待结果
   /// Dart的Future和JavaScript的Promise类似
-  Future<List> requestBooks() async {
+  Future<List<Book>> requestBooks() async {
     var rng = new Random();
-    var _result = await ApiService.searchBooks(
+    List<Book> _result = await ApiService.searchBooks(
         "https://api.douban.com/v2/book/search?q=" + testQuery[rng.nextInt(7)],
         params: null);
     setState(() {
-      result = _result['books'];
+      result = _result;
     });
-    return _result['books'];
+    return _result;
   }
 
   inflateBody() {
@@ -63,10 +66,10 @@ class _BookTabPageState extends State<BookTabPage> {
         child: ListView.builder(
             itemCount: result.length,
             itemBuilder: (BuildContext context, int position) {
-              var book = result[position];
+              Book book = result[position];
+              print("Book to Json: ${json.encode(book)}"); // 测试对象序列化
               return BookListItem(
-                book: new Book(
-                    book["id"], book["title"], book["author"], book["image"]),
+                book: book,
               );
             }),
         onRefresh: requestBooks,

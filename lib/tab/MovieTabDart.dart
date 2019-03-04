@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_store/api/ApiService.dart';
+import 'package:grocery_store/tab/model/Movie.dart';
 
 class MovieTabPage extends StatefulWidget {
   @override
@@ -8,6 +10,22 @@ class MovieTabPage extends StatefulWidget {
 }
 
 class _MovieTabPageState extends State<MovieTabPage> {
+  List<Movie> result = List<Movie>();
+
+  @override
+  void initState() {
+    super.initState();
+    getHotMovies();
+  }
+
+  Future<List<Movie>> getHotMovies() async {
+    List<Movie> _movies = await ApiService.getHotMovies();
+    setState(() {
+      result = _movies;
+    });
+    return _movies;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

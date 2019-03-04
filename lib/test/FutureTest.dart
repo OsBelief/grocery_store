@@ -1,3 +1,5 @@
+import 'dart:async';
+
 /// 学习Future
 class FutureTest {
   static void test() {
