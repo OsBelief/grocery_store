@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:grocery_store/api/ApiService.dart';
+import 'package:grocery_store/db/Database.dart';
 import 'package:grocery_store/tab/model/Book.dart';
 import 'dart:math';
 
@@ -30,6 +31,7 @@ class _BookTabPageState extends State<BookTabPage> {
   @override
   void initState() {
     super.initState();
+    loadLocal();
     requestBooks();
   }
 
@@ -45,6 +47,14 @@ class _BookTabPageState extends State<BookTabPage> {
         child: inflateBody(),
       ),
     );
+  }
+
+  loadLocal() async {
+    List<Book> bookList = await DBProvider().getAllBooks();
+    if (bookList == null || bookList.isEmpty) return;
+    setState(() {
+      result = bookList;
+    });
   }
 
   /// Dart和JavaScript中的async函数语义一致, async表示函数里有异步操作, await表示紧跟在后面的表达式需要等待结果

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:grocery_store/db/Database.dart';
 import 'package:grocery_store/tab/model/Book.dart';
 import 'package:grocery_store/tab/model/Movie.dart';
 
@@ -11,8 +12,13 @@ class ApiService {
     print("searchBooks path=" + path);
     var response = await HttpUtil.get(path, params: params);
     print("searchBooks response.runtimeType ${response.runtimeType}");
-    var books = response["books"] as List;
-    return books.map((i) => Book.fromJson(i)).toList();
+    var booksJson = response["books"] as List;
+    List<Book> bookList = booksJson.map((i) => Book.fromJson(i)).toList();
+    if (bookList != null && bookList.isNotEmpty) {
+      await DBProvider().clearBooks();
+      await DBProvider().insertBooks(bookList);
+    }
+    return bookList;
   }
 
   static Future<List<Movie>> getHotMovies() async {
