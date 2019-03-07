@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      grocery_store|food_annotation:
+        enabled: true
+
+builders:
+  food_annotation:
+    import: "package:grocery_store/annotation/food_annotation.dart"
+    builder_factories: ["foodBuilder"]
+    build_extensions: {".dart": ["food_annotation.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]
