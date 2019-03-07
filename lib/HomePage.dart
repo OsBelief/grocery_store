@@ -3,8 +3,15 @@ import 'package:flutter/services.dart';
 import 'tab/BookTabDart.dart';
 import 'tab/MovieTabDart.dart';
 import 'tab/MusicTabDart.dart';
+import 'package:annotation_route/route.dart';
+import 'package:grocery_store/router/router.dart';
 
+@ARoute(url: "grocery://home")
 class HomePage extends StatefulWidget {
+  final GroceryRouteOption routeOption;
+
+  HomePage(this.routeOption);
+
   @override
   State<StatefulWidget> createState() {
     return _HomePageState();

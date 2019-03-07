@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quiver/async.dart';
 
-import 'HomePage.dart';
 import 'test/FutureTest.dart';
 import 'test/AsyncMethodTest.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'test/LittleDart.dart';
+import 'package:grocery_store/router/router.dart';
 
 class FlashPage extends StatefulWidget {
   @override
@@ -104,8 +104,7 @@ class _FlashPageState extends State<FlashPage> {
   }
 
   void goToHome() {
-    Navigator.pushReplacement(context,
-        MaterialPageRoute(builder: (BuildContext context) => HomePage()));
+    GroceryRouter.pushReplacement(context, "grocery://home");
   }
 
   /// SharedPreferences的使用
